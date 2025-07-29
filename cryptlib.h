@@ -613,7 +613,7 @@ public:
 	/// \details FIPS 140-2 compliance is disabled by default. It is only used by certain
 	///  versions of the library when the library is built as a DLL on Windows. Also see
 	///  CRYPTOPP_ENABLE_COMPLIANCE_WITH_FIPS_140_2 in config.h.
-    Algorithm(bool checkSelfTestStatus = true) {}
+	Algorithm(bool checkSelfTestStatus = true);
 
 	/// \brief Provides the name of this algorithm
 	/// \return the standard algorithm name
@@ -1179,7 +1179,7 @@ public:
 	/// \brief Provides input and output data alignment for optimal performance
 	/// \return the input data alignment that provides optimal performance
 	/// \sa GetAlignment() and OptimalBlockSize()
-    virtual unsigned int OptimalDataAlignment() const;
+	virtual unsigned int OptimalDataAlignment() const;
 
 	/// \brief Updates the hash with additional input and computes the hash of the current message
 	/// \param digest a pointer to the buffer to receive the hash
@@ -1255,7 +1255,7 @@ public:
 	/// \details TruncatedVerify() restarts the hash for the next message.
 	/// \pre <tt>digestLength <= DigestSize()</tt> or <tt>digestLength <= HASH::DIGESTSIZE</tt> ensures
 	///  the input byte buffer is a valid size.
-    virtual bool TruncatedVerify(const byte *digest, size_t digestLength);
+	virtual bool TruncatedVerify(const byte *digest, size_t digestLength);
 
 	/// \brief Updates the hash with additional input and verifies the hash of the current message
 	/// \param digest a pointer to the buffer of an \a existing hash
