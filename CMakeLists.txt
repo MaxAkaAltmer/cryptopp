@@ -8,12 +8,13 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Опции
 option(BUILD_SHARED_LIBS "Build shared library" OFF)
-if(MSVC)
-    option(CRYPTOPP_DISABLE_ASM "Disable assembly optimizations" ON)
-else()
-    option(CRYPTOPP_DISABLE_ASM "Disable assembly optimizations" OFF)
-endif()
+
+option(CRYPTOPP_DISABLE_ASM "Disable assembly optimizations" OFF)
 option(CRYPTOPP_ENABLE_AVX "Enable AVX instructions" OFF)
+
+if(MSVC)
+    set(CRYPTOPP_DISABLE_ASM ON CACHE BOOL "Disable assembly optimizations" FORCE)
+endif()
 
 # Автоматически находим все .cpp и .asm файлы
 file(GLOB CRYPTOPP_SOURCES CONFIGURE_DEPENDS
@@ -43,8 +44,15 @@ set_target_properties(cryptopp_static PROPERTIES
     POSITION_INDEPENDENT_CODE ON
 )
 
+if(CRYPTOPP_DISABLE_ASM)
+    target_compile_definitions(cryptopp_static PUBLIC
+        CRYPTOPP_DISABLE_ASM
+        CRYPTOPP_DISABLE_SSE2
+    )
+endif()
+
 # Подключаем заголовки
-target_include_directories(cryptopp_static PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(cryptopp_static PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 # Компиляционные определения
 target_compile_definitions(cryptopp_static PRIVATE
