@@ -18,7 +18,7 @@ file(GLOB CRYPTOPP_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/*.asm"
 )
 
-list(FILTER CRYPTOPP_SOURCES EXCLUDE REGEX "/(test|validat|bench|dlltest|fipstest|cryptest|dll)\\.cpp$")
+list(FILTER CRYPTOPP_SOURCES EXCLUDE REGEX "/(test|validat|bench|dlltest|fipstest|cryptest)\\.cpp$")
 
 # Удаляем ASM-файлы, если отключено
 if(CRYPTOPP_DISABLE_ASM)
@@ -52,7 +52,6 @@ target_include_directories(cryptopp_static PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/..
 
 # Компиляционные определения
 target_compile_definitions(cryptopp_static PRIVATE
-    CRYPTOPP_EXPORTS
     CRYPTOPP_NO_GLOBAL_ASM_KEYWORD
 )
 
@@ -100,4 +99,5 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
     DESTINATION include/cryptopp
     FILES_MATCHING PATTERN "*.h"
 )
+
 
