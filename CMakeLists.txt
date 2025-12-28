@@ -9,12 +9,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Опции
 option(BUILD_SHARED_LIBS "Build shared library" OFF)
 
-option(CRYPTOPP_DISABLE_ASM "Disable assembly optimizations" OFF)
+option(CRYPTOPP_DISABLE_ASM "Disable assembly optimizations" ON)
 option(CRYPTOPP_ENABLE_AVX "Enable AVX instructions" OFF)
-
-if(MSVC)
-    set(CRYPTOPP_DISABLE_ASM ON CACHE BOOL "Disable assembly optimizations" FORCE)
-endif()
 
 # Автоматически находим все .cpp и .asm файлы
 file(GLOB CRYPTOPP_SOURCES CONFIGURE_DEPENDS
@@ -22,7 +18,7 @@ file(GLOB CRYPTOPP_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/*.asm"
 )
 
-list(FILTER CRYPTOPP_SOURCES EXCLUDE REGEX "/(test|validat|bench|dlltest|fipstest|cryptest)\\.cpp$")
+list(FILTER CRYPTOPP_SOURCES EXCLUDE REGEX "/(test|validat|bench|dlltest|fipstest|cryptest|dll)\\.cpp$")
 
 # Удаляем ASM-файлы, если отключено
 if(CRYPTOPP_DISABLE_ASM)
@@ -104,3 +100,4 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
     DESTINATION include/cryptopp
     FILES_MATCHING PATTERN "*.h"
 )
+
